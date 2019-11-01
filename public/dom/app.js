@@ -9,6 +9,10 @@ GAME RULES:
 
 */
 
-var score1=0;
-var score2=0;
+var scores, roundScore, activePlayer, dice;
 
+scores = [0,0];
+roundScore = 0;
+activePlayer = 0;
+
+dice = 6;
