@@ -29,6 +29,7 @@
 // console.log(john);
 
 
+//////////////////////////////////////////////
 // // Objects.create
 // var personProto = {
 //     calcAge: function(){
@@ -44,43 +45,108 @@
 // var luke = Object.create(Object.prototype)
 
 
+//////////////////////////////////////////////
 // Primitive vs Objects
 // primitives
-var a = 23;
-var b = a;
+// var a = 23;
+// var b = a;
 
-a = 42;
-console.log(a);
-console.log(b);
+// a = 42;
+// console.log(a);
+// console.log(b);
 
-// objects
-var obj1 = {
+// // objects
+// var obj1 = {
+//     name: 'John',
+//     age: 10
+// }
+
+// var obj2 = obj1;
+
+// obj1.age = 11;
+
+// console.log(obj1.age);
+// console.log(obj2.age);
+
+// // functions
+// var age = 10;
+// var obj = {
+//     name: 'Jonas',
+//     city: 'Lisbon'
+// }
+
+// function change(x, y){
+//     x = 30;
+//     y.city = 'San Francisco'
+// }
+
+// change(age, obj);
+
+// console.log(age, obj.city);
+
+
+//////////////////////////
+// IIFE
+
+// function game(){
+//     var score = Math.random() * 10;
+//     console.log(score >= 5);
+// }
+
+// game();
+
+// (function(){
+//     var name = 'John';
+//     console.log(name);
+// })();
+
+// passing arguments
+// (function(val1, val2){
+//     console.log(val1+val2);
+// })(480,32);
+
+
+///////////////////////////////
+// Closures
+
+// function retirement(retirementAge){
+//     var a = " years left until retirement.";
+//     return function(yearOfBirth){
+//         var age = 2016 - yearOfBirth;
+//         console.log((retirementAge-age) + a);
+//     }
+// }
+
+// var retirementUs = retirement(66);
+// retirementUs(1977);
+
+// retirement(66)(1977);
+
+///////////////////////////////////
+// Bind, Call and Apply
+
+// Call
+var john = {
     name: 'John',
-    age: 10
+    age: 26,
+    job: 'teacher',
+    presentation: function(style, timeOfDay){
+        if(style === 'formal'){
+            console.log('Good ' + timeOfDay + ', ladies and gentlemen! I\'m ' + this.name + '. I\'m ' + this.job + '.' );            
+        }else if(style === 'friendly'){
+            console.log('Hey! What\'s up, I\'m ' + this.name + '. I\'m ' + this.job + '.' );            
+        }
+    }
 }
 
-var obj2 = obj1;
-
-obj1.age = 11;
-
-console.log(obj1.age);
-console.log(obj2.age);
-
-// functions
-var age = 10;
-var obj = {
-    name: 'Jonas',
-    city: 'Lisbon'
+var emily = {
+    name: 'Emily',
+    age: '33',
+    job: 'designer'
 }
 
-function change(x, y){
-    x = 30;
-    y.city = 'San Francisco'
-}
+john.presentation('formal', 'morning');
 
-change(age, obj);
+// console.log(john);
 
-console.log(age, obj.city);
-
-
-
+john.presentation.call(emily, 'friendly', 'afternoon')
