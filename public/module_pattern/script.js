@@ -1,3 +1,7 @@
+/////  Module Pattern
+
+
+// budgetController
 var budgetController = (function(){
     var x = 23;
     var add = function(a){
@@ -9,4 +13,10 @@ var budgetController = (function(){
             console.log(add(b));            
         }
     }
-})()
+})();
+
+
+// controller
+var controller = (function(){
+
+})();
