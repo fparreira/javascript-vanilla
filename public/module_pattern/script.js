@@ -19,4 +19,13 @@ var budgetController = (function(){
 // controller
 var controller = (function(){
 
+    document.addEventListener('keypress', function(e){
+        // console.log(e);
+
+        if(e.keyCode === 13 || e.which === 13){
+            console.log('ENTER was pressed.');            
+        }
+
+    });
+
 })();
