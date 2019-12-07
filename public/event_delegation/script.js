@@ -5,7 +5,16 @@ var controller = (function(){
     
     var deleteContainer = function(e){
         
-        console.log(e.target);
+        // console.log(e.target);
+        // console.log(e.target.parentNode.parentNode.parentNode.id);
+        
+        var areaID;
+        areaID = e.target.parentNode.parentNode.parentNode.id;
+
+        if(areaID){
+            console.log(areaID);
+        }
+        
         
     }
 
