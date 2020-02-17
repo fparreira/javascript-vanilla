@@ -1,10 +1,24 @@
 // BUDGET CONTROLLER
 var budgetController = (function(){
 
-    
+
 
 
 })();
+
+
+var Expanse = function(id, description, value){
+    this.id = id;
+    this.description = description;
+    this.value = value;
+};
+
+Expanse.prototype.escreve = function(){
+    console.log('test function');
+    
+}
+
+
 
 // UI CONTROLLER
 var UIController = (function(){
