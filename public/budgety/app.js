@@ -1,10 +1,23 @@
 // BUDGET CONTROLLER
 var budgetController = (function(){
 
-    var Expanse = function(id, description, value){
+    var Expense = function(id, description, value){
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;
+    };
+
+    Expense.prototype.calcPercentages = function(totalIncome){
+        if(totalIncome > 0){
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        }else{
+            this.percentage = -1;
+        }
+    };
+
+    Expense.prototype.getPercentages = function(){
+        return this.percentage;
     };
 
     var Income = function(id, description, value){
@@ -48,7 +61,7 @@ var budgetController = (function(){
             }
 
             if(type === 'exp'){
-                newItem = new Expanse(ID, des, val);
+                newItem = new Expense(ID, des, val);
             }else if(type === 'inc'){
                 newItem = new Income(ID, des, val);
             }
@@ -76,11 +89,11 @@ var budgetController = (function(){
 
         calculateBudget: function(){
 
-            // calculate total income and expanses
+            // calculate total income and expenses
             calculateTotal('exp');
             calculateTotal('inc');
             
-            // calculate the budget: income - expanses
+            // calculate the budget: income - expenses
             data.budget = data.totals.inc - data.totals.exp;
             
             // calculate the percentage of income that we spent
@@ -90,6 +103,21 @@ var budgetController = (function(){
                 data.percentage = -1;
             }
 
+        },
+
+        calculatePercentages: function(){
+
+            data.allItems.exp.forEach(function(cur){
+                cur.calcPercentages(data.totals.inc);
+            });
+
+        },
+
+        getPercentages: function(){
+            var allPerc = data.allItems.exp.map(function(cur){
+                return cur.getPercentages();
+            });
+            return allPerc;
         },
 
         getBudget: function(){
@@ -237,7 +265,23 @@ var controller = (function(budgetCtrl, UICtrl){
         // display the budget on the UI
         UICtrl.displayBudget(budget);
 
-    }
+    };
+
+    var updatePercentages = function(){
+
+        // calculate the percentages
+        budgetCtrl.calculatePercentages();
+
+        // read percentages from the budget controller
+        var percentages = budgetCtrl.getPercentages();
+
+        // update the UI with the news percentages
+        console.log(percentages);
+        
+
+
+
+    };
 
 
     var ctrlAddItem = function(){
@@ -258,9 +302,13 @@ var controller = (function(budgetCtrl, UICtrl){
 
             // calculate and update budget
             updateBudget();
+
+            // calculate and update percentages
+            updatePercentages();
+
         }
         
-    }
+    };
 
     var ctrlDeleteItem = function(event){
         var itemID, splitID, type, ID;
@@ -283,9 +331,12 @@ var controller = (function(budgetCtrl, UICtrl){
             // update and show the new budget
             updateBudget();
 
+            // calculate and update the percentages
+            updatePercentages();
+
         }
         
-    }
+    };
 
     return {
         init: function(){
